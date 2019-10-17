@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './login.scss'
 import App from './App';
-import LoginBox from './App';
-import RegisterBox from './App';
+
 import * as serviceWorker from './serviceWorker';
 
 
