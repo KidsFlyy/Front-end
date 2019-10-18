@@ -17,7 +17,7 @@ export default class FadeTransition extends React.Component {
       },
       entered: {
         opacity: "1",
-        transitionDelay: "700ms"
+        transitionDelay: "1ms"
       },
       exiting: {
         opacity: "0"

@@ -1,13 +1,13 @@
 import React from "react";
 import reactDOM from "react-dom";
-
 import TransitionGroup from "react-transition-group";
-
 import FadeTransition from "../src/transitions/fadeTransition";
 
+import NavBar from "./nav.js"
 
 
-class App extends React.Component {
+
+class LoginApp extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,8 +28,12 @@ class App extends React.Component {
   render() {
 
     return (
+     
+     
       <div className="root-container">
-
+<header>
+ <NavBar />
+</header>
         <div className="box-controller">
           <div
             className={"controller " + (this.state.isLoginOpen
@@ -321,4 +325,4 @@ class RegisterBox extends React.Component {
 
 }
 
-export default App;
+export default LoginApp;
