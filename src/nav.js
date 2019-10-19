@@ -1,34 +1,19 @@
-import React from "react";
-import {BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import React, { Component } from "react";
+ 
+class Navbar extends Component {
+    render() {
+        return (
+            <div>
+              <ul id="nav">
 
-function Home(props){
-    return<h3>Home</h3>
+                <li><a href="#">KidsFly Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+        );
+    }
 }
 
-function Login(props) {
-    return<h3>Login</h3>
-
-}
-
-function NavBar () {
-    return (
-<div className="NavigationBar">
-
-<header className="App-header">
-
-
-<Router>
-<Link to="/">Home</Link>
-<Link to="/Login">Login</Link>
-
-<Route exact path="/" component={Home} />
-<Route path="/login" component={Login} />
-</Router>
-
-</header>
-</div>
-    );
-}
-
-export default NavBar;
+export default Navbar;

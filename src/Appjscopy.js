@@ -329,5 +329,3 @@ class RegisterBox extends React.Component {
   }
 
 }
-
-export default LoginApp;

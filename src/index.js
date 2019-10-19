@@ -3,18 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './login.scss'
 import App from './App';
-import LoginApp from './Login/LoginApp';
-import NavBar from "./nav.js"
+
 import {BrowserRouter as Router } from "react-router-dom";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    import * as serviceWorker from './serviceWorker';
 
-import * as serviceWorker from './serviceWorker';
-
-export default function FullPage() {
-    return <main>
-    <NavBar/>    
-      <LoginApp />
- </main>
-  }
 
 
 ReactDOM.render(

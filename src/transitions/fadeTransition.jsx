@@ -17,7 +17,7 @@ export default class FadeTransition extends React.Component {
       },
       entered: {
         opacity: "1",
-        transitionDelay: "1ms"
+        transitionDelay: "100ms"
       },
       exiting: {
         opacity: "0"
@@ -33,7 +33,7 @@ export default class FadeTransition extends React.Component {
     return (
       <Transition in={this.props.isOpen} timeout={this.props.duration}>
         {(state) => {
-          if (state == "exited") 
+          if (state === "exited") 
             return null;
           return React
             .Children
