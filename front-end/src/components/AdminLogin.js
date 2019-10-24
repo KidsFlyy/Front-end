@@ -1,6 +1,12 @@
 import React from 'react';
-import {  } from 'reactstrap';
+import axios from "axios";
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import {CardWrapper, CardHeader,CardHeading,CardBody,
+ CardFieldset,CardInput
+  ,CardButton,CardLink
+} from "./AdminSC"; 
+
+
 
 class AdminLogin extends React.Component {
   state = {
@@ -19,23 +25,53 @@ class AdminLogin extends React.Component {
     });
   };
 
-  login = e => {
+   login = e => {
     e.preventDefault();
     axiosWithAuth()
       .post('/login', this.state.credentials)
       .then(res => {
         localStorage.setItem('token', res.data.payload);
-        this.props.history.push('/protected');
+        this.props.history.push('/protected'); //this is where the auth login will take me.
       })
       .catch(err => console.log(err));
   };
 
   render() {
-      <div> 
-          <h1> Admin </h1>
+    return (
+      <div>
+        <form onSubmit={this.login}>
+        <CardWrapper>
+
+        <CardHeader>
+          <CardHeading> Admin Login </CardHeading>
+        </CardHeader>
+
+        <CardBody>
+
+          <CardFieldset>
+            <CardInput placeholder="Username" type="text" required />
+          </CardFieldset>
+
+          <CardFieldset>
+            <CardInput placeholder="Password" type="password" required />
+          </CardFieldset>
+
+          <CardFieldset>
+            <CardButton type="button">Sign In</CardButton>
+          </CardFieldset>
+
+          <CardFieldset>
+            <CardLink> Add link here later to reg page... </CardLink>
+          </CardFieldset>
+
+        </CardBody>
+
+      </CardWrapper>
+      </form>
       </div>
+    );
   }
-
-
-  export default AdminLogin;
-
+ }
+ export default AdminLogin;
+ 
+ 

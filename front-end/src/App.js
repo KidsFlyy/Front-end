@@ -1,15 +1,24 @@
 import React from 'react';
-
-import Navv from './components/Navv'
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import AdminLogin from './components/AdminLogin';
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Navv /> 
-      </header>
-    </div>
+    <Router>
+     <div className="App">
+     <h1> KidsFly! </h1>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <Switch> 
+       <Route exact path="/login" component={AdminLogin} />
+       {/* <PrivateRoute exact path="/" component={} /> 
+      //this is the cards for the CRUD comp.  */}
+      </Switch>
+     </div>
+   </Router>
   );
 }
 
