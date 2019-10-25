@@ -1,79 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Field, withFormik } from "formik";
-// import axios from "axios";
+import React from "react";
+import ReactDOM from "react-dom";
+import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
-// import Routes from "./Routes/Routes";
+import axios from "axios";
 
+function LoginForm({ values, errors, touched, isSubmitting }) {
+  return (
+    <Form>
+        <div>
+          
+          {touched.name && errors.email && <p>{errors.name}</p>}
+          <Field type="text" name="name" placeholder="Full Name" />
+        </div>
+      <div>
 
+        {touched.email && errors.email && <p>{errors.email}</p>}
+        <Field type="email" name="email" placeholder="Email" />
+      </div>
+      <div>
 
+{touched.airport && errors.aiport && <p>{errors.airport}</p>}
+<Field type="email" name="email" placeholder="Airport" />
+</div>
 
-
-function Register({errors, touched, status, props}){
-    const [auth, setAuth] = useState([]);
-
-    return(
-
-        
-
-        <div className="RegisterForm">
+      <div>
+        {touched.password && errors.password && <p>{errors.password}</p>}
+        <Field type="password" name="password" placeholder="Password" />
+      </div>
      
-       <Form>
-       <Field
-           component="input"
-           type="text"
-           name="fullName"
-           placeholder="Enter Full Name"
-           />
-           {touched.fullName && errors.fullName && (
-               <p className="error">{errors.fullName}</p>
-           )}
-           <Field
-           component="input"
-           type="text"
-           name="userName"
-           placeholder="User Name"
-           />
-           {touched.userName && errors.userName && (
-               <p className="error">{errors.userName}</p>
-           )}
-            <Field
-            component="input"
-            type="password"
-            name="password"
-            placeholder="Password"
-            />
-            {touched.password && errors.password && (
-                <p className="error">{errors.password}</p>
-            )}
-       
-            <button type="submit" onClick={(prop) => props.history.push("/request")}>Login</button>
-            
-
-       </Form>
-           
-       </div>
-       
-    )
+    
+      <button disabled={isSubmitting}>Submit</button>
+    </Form>
+  );
 }
 
-const propsToValuesMap = withFormik({
-    mapPropsToValues({fullName,userName, password}){
-        return {
-            fullName: fullName || "",
-            userName: userName || "",
-            password: password || ""
-        };
-    },
+const FormikLoginForm = withFormik({
+  mapPropsToValues({ email, password }) {
+    return {
+      email: email || "",
+      password: password || "",
+     
+    };
+  },
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .email("Email not valid")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(16, "Password must be 16 characters or longer")
+      .required("Password is required")
+  }),
+  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
+    if (values.email === "alreadytaken@atb.dev") {
+      setErrors({ email: "That email is already taken" });
+    } else {
+      axios
+        .post("https://kids-flyy.herokuapp.com", values)
+        .then(res => {
+          console.log(res); // Data was created successfully and logs to console
+          resetForm();
+          setSubmitting(false);
+        })
+        .catch(err => {
+          console.log(err); // There was an error creating the data and logs to console
+          setSubmitting(false);
+        });
+    }
+  }
+})(LoginForm);
 
-    validationSchema: Yup.object().shape({
-        fullName: Yup.string().required("Full Name is required"),
-        userName: Yup.string().required("User name is required"),
-        password: Yup.string().required("Password is required")
-    })   
-});
-
-const LoginFormik = propsToValuesMap(Register);
-
-
-
-export default LoginFormik;
+export default FormikLoginForm;

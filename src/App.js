@@ -23,7 +23,7 @@ function App() {
         </nav>
       </header>
       <div className="appHeader">
-      <h1>Login</h1>
+
       </div>
       <div className="form">
 

@@ -1,79 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Field, Formik, withFormik } from "formik";
-import axios from "axios";
+import React from "react";
+import ReactDOM from "react-dom";
+import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
-// import Routes from "./Routes";
+import axios from "axios";
 
-
-
-
-
-function Login({errors, touched, status, props}){
-    const [auth, setAuth] = useState([]);
-
-    return(
-        <div className="loginForm">
+function LoginForm({ values, errors, touched, isSubmitting }) {
+  return (
+    <Form>
+      <div>
+        {touched.email && errors.email && <p>{errors.email}</p>}
+        <Field type="email" name="email" placeholder="Email" />
+      </div>
+      <div>
+        {touched.password && errors.password && <p>{errors.password}</p>}
+        <Field type="password" name="password" placeholder="Password" />
+      </div>
      
-       <Form>
-
-           <Field
-           component="input"
-           type="text"
-           name="userName"
-           placeholder="User Name"
-           />
-           {touched.userName && errors.userName && (
-               <p className="error">{errors.userName}</p>
-           )}
-            <Field
-            component="input"
-            type="password"
-            name="password"
-            placeholder="Password"
-            />
-            {touched.password && errors.password && (
-                <p className="error">{errors.password}</p>
-            )}
-            <button type="submit" onClick={(prop) => props.history.push("/request")}>Login</button>
-            
-
-       </Form>
-           
-       </div>
-       
-    )
+    
+      <button disabled={isSubmitting}>Submit</button>
+    </Form>
+  );
 }
 
-const propsToValuesMap = withFormik({
-    mapPropsToValues({userName, password}){
-        return {
-            userName: userName || "",
-            password: password || ""
-        };
-    },
+const FormikLoginForm = withFormik({
+  mapPropsToValues({ email, password, tos, meal }) {
+    return {
+      email: email || "",
+      password: password || "",
+      tos: tos || false,
+      meal: meal || "silver"
+    };
+  },
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .email("Email not valid")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(16, "Password must be 16 characters or longer")
+      .required("Password is required")
+  }),
+  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
+    if (values.email === "alreadytaken@atb.dev") {
+      setErrors({ email: "That email is already taken" });
+    } else {
+      axios
+        .post("https://kids-flyy.herokuapp.com", values)
+        .then(res => {
+          console.log(res); // Data was created successfully and logs to console
+          resetForm();
+          setSubmitting(false);
+        })
+        .catch(err => {
+          console.log(err); // There was an error creating the data and logs to console
+          setSubmitting(false);
+        });
+    }
+  }
+})(LoginForm);
 
-    validationSchema: Yup.object().shape({
-        userName: Yup.string().required("User name is required"),
-        password: Yup.string().required("Password is required")
-    })   
-});
-
-// useEffect( () => {
-    
-//     axios
-//     .post("https://kids-fly-backend.herokuapp.com")
-
-//     .then(res => {
-//       console.log(res.data); // Data was created successfully and logs to console
-//     })
-//     .catch(err => {
-//       console.log(err); // There was an error creating the data and logs to console
-//     });
-//   }
-// (Login);
-
-const LoginFormik = propsToValuesMap(Login);
-
-
-
-export default Login;
+export default FormikLoginForm;
