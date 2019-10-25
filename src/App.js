@@ -1,8 +1,9 @@
 import React from 'react';
-import {  Link, Route } from 'react-router-dom';
+import { NavLink, Link, Route } from 'react-router-dom';
 import Login from './Login/Login'
 import './App.css';
 import Register from './Register/Register';
+
 
 
 
@@ -15,10 +16,11 @@ function App() {
       <header>
         <nav>
           <div className='nav-links'>
-          
-         <Link className="links" to="/"> Home </Link>
+    
+          <Link className="links" to="/"> Home </Link>
+          <Link className="links" to="/AboutUs">About Us </Link>
             <Link className="links" to="/login"> Login </Link>
-            <Link className="links" to="/register"> Register </Link>
+            <Link className="links" to="/register"> Sign Up </Link>
           </div>
         </nav>
       </header>
@@ -27,6 +29,19 @@ function App() {
       </div>
       <div className="form">
 
+      {/* <Route exact path="/" component={Home} /> */}
+
+      <Route exact path='/' component={() => { 
+     window.location.href = 'https://keen-northcutt-4fb34f.netlify.com/'; 
+     return null;
+}}/>
+
+<Route exact path='/AboutUs' component={() => { 
+     window.location.href = 'https://keen-northcutt-4fb34f.netlify.com/about.html'; 
+     return null;
+}}/>
+
+   
      <Route path="/login" component={Login}/>
      <Route path="/register" component={Register} />
      </div>
