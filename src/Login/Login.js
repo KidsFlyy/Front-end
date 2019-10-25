@@ -4,9 +4,16 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
+
+
+
 function LoginForm({ values, errors, touched, isSubmitting }) {
   return (
+
+
+
     <Form>
+     
       <div>
         {touched.email && errors.email && <p>{errors.email}</p>}
         <Field type="email" name="email" placeholder="Email" />
@@ -57,5 +64,16 @@ const FormikLoginForm = withFormik({
     }
   }
 })(LoginForm);
+
+export const axiosWithAuth = () => {
+    const token = localStorage.getItem('token');
+
+    return axios.create ({
+        baseURL: 'https://kids-flyy.herokuapp.com',
+        headers: {
+            Authorization: token
+        }
+    });
+}
 
 export default FormikLoginForm;

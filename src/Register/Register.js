@@ -69,4 +69,15 @@ const FormikLoginForm = withFormik({
   }
 })(LoginForm);
 
+export const axiosWithAuth = () => {
+    const token = localStorage.getItem('token');
+
+    return axios.create ({
+        baseURL: 'https://kids-flyy.herokuapp.com',
+        headers: {
+            Authorization: token
+        }
+    });
+}
+
 export default FormikLoginForm;
